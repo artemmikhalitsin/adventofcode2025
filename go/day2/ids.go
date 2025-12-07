@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"math"
 )
 
@@ -17,6 +18,7 @@ func getSumOfInvalid(ranges []Range, isValid ValidationFunc) int {
 	for _, r := range ranges {
 		invalidIds := findInvalid(r, isValid)
 		for _, id := range invalidIds {
+			log.Println("Found invalid ID:", id)
 			sum += id
 		}
 	}
@@ -59,7 +61,10 @@ func isInvalidV2(id int) bool {
 	// or n/3 (e.g. 123123 for 6 digit number)
 	// so we can check for all possible sequence lengths if they repeat to form the number
 	numberOfDigits := getNumberOfDigits(id)
-	for i := 1; i <= getMaxLengthOfRepeatingSequence(numberOfDigits); i++ {
+	if numberOfDigits == 1 {
+		return false // single digit numbers cannot be invalid
+	}
+	for i := getMaxLengthOfRepeatingSequence(numberOfDigits); i > 0; i-- {
 		if numberOfDigits%i != 0 {
 			continue // only consider lengths that divide evenly into numberOfDigits
 		}
@@ -79,7 +84,7 @@ func isRepeatedSequence(number int, sequence int, mask int) bool {
 	if number == sequence {
 		return true
 	}
-	// recursive case: check if the leading part of the number matches the sequence,
+	// recursive case: check if the last digits match the sequence
 	// and then check that this is true for the rest of the number
 	return number%mask == sequence && isRepeatedSequence(number/int(mask), sequence, mask)
 }
