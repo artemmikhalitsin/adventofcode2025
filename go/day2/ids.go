@@ -75,7 +75,7 @@ func isInvalidV2(id int) bool {
 }
 
 func isRepeatedSequence(number int, sequence int, mask int) bool {
-	// recursive base case: number == sequence
+	// base case: number == sequence
 	if number == sequence {
 		return true
 	}
