@@ -11,10 +11,16 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println("The solution is", solve(input))
+	fmt.Println("The part one solution is", solvePartOne(input))
+	fmt.Println("The part two solution is", solvePartTwo(input))
 }
 
-func solve(input []byte) int {
+func solvePartOne(input []byte) int {
 	ranges := extractRanges(string(input))
-	return getSumOfInvalid(ranges)
+	return GetSumOfInvalidV1(ranges)
+}
+
+func solvePartTwo(input []byte) int {
+	ranges := extractRanges(string(input))
+	return GetSumOfInvalidV2(ranges)
 }
